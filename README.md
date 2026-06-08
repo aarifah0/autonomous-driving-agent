@@ -73,7 +73,7 @@ This project uses **PPO (Proximal Policy Optimization)** with `stable-baselines3
 - `batch_size`: `64`
 - `n_epochs`: `10`
 - `ent_coef`: `0.01`
-- `total_timesteps`: `500000`
+- `total_timesteps`: `300000`
 - `checkpoint_freq`: `50000`
 - `eval_freq`: `10000`
 - `eval_episodes`: `2`
@@ -154,6 +154,7 @@ Because the reward function combines speed, collision avoidance, and lane discip
 ```bash
 pip install -r requirements.txt
 ```
+Note: ffmpeg is required by moviepy for video encoding/decoding; install it separately on Windows.
 
 ### Train the agent
 
@@ -176,7 +177,7 @@ python evolution_video.py --episodes 1
 ### Generate training plots
 
 ```bash
-python visualize.py --log_dir logs --window 10
+python src/visualize.py --log_dir logs --window 10
 ```
 
 ---

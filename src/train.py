@@ -12,7 +12,7 @@ from stable_baselines3.common.monitor import Monitor
 from stable_baselines3.common.callbacks import CheckpointCallback, EvalCallback, CallbackList, BaseCallback
 
 from environment import make_highway_env
-from agent import create_ppo_agent, save_agent
+from agent import create_ppo_agent, save_agent, load_agent
 
 # Adjust paths for config and checkpoint directories when running from src/
 import sys
