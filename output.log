@@ -1,0 +1,57 @@
+C:\Users\Aarif\AppData\Roaming\Python\Python313\site-packages\pygame\pkgdata.py:25: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import resource_stream, resource_exists
+C:\Users\Aarif\AppData\Roaming\Python\Python313\site-packages\gymnasium\wrappers\rendering.py:293: UserWarning: [33mWARN: Overwriting existing videos at C:\Users\Aarif\Desktop\projects\agent_driving\videos\eval\untrained folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+C:\Users\Aarif\AppData\Roaming\Python\Python313\site-packages\gymnasium\wrappers\rendering.py:293: UserWarning: [33mWARN: Overwriting existing videos at C:\Users\Aarif\Desktop\projects\agent_driving\videos\eval\half_trained folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+C:\Users\Aarif\AppData\Roaming\Python\Python313\site-packages\gymnasium\wrappers\rendering.py:293: UserWarning: [33mWARN: Overwriting existing videos at C:\Users\Aarif\Desktop\projects\agent_driving\videos\eval\fully_trained_500000_steps folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+Creating random baseline for stage: untrained
+Completed untrained episode 1
+Loading stage half_trained model from C:\Users\Aarif\Desktop\projects\agent_driving\checkpoints\highway_ppo_model_2500_steps.zip
+Wrapping the env with a `Monitor` wrapper
+Wrapping the env in a DummyVecEnv.
+Agent successfully loaded from: C:\Users\Aarif\Desktop\projects\agent_driving\checkpoints\highway_ppo_model_2500_steps.zip
+Completed half_trained episode 1
+Loading stage fully_trained_500000_steps model from C:\Users\Aarif\Desktop\projects\agent_driving\checkpoints\highway_ppo_final.zip
+Wrapping the env with a `Monitor` wrapper
+Wrapping the env in a DummyVecEnv.
+Agent successfully loaded from: C:\Users\Aarif\Desktop\projects\agent_driving\checkpoints\highway_ppo_final.zip
+Traceback (most recent call last):
+  File "C:\Users\Aarif\Desktop\projects\agent_driving\evolution_video.py", line 181, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\Aarif\Desktop\projects\agent_driving\evolution_video.py", line 171, in main
+    stage_video = make_stage_video(stage_name, model_path, config_path, output_dir, args.episodes)
+  File "C:\Users\Aarif\Desktop\projects\agent_driving\evolution_video.py", line 91, in make_stage_video
+    result = env.step(action)
+  File "C:\Users\Aarif\AppData\Roaming\Python\Python313\site-packages\gymnasium\wrappers\rendering.py", line 363, in step
+    obs, rew, terminated, truncated, info = self.env.step(action)
+                                            ~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\Aarif\Desktop\projects\agent_driving\src\environment.py", line 36, in step
+    obs, reward, terminated, truncated, info = self.env.step(action)
+                                               ~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\Aarif\AppData\Roaming\Python\Python313\site-packages\gymnasium\wrappers\common.py", line 393, in step
+    return super().step(action)
+           ~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\Aarif\AppData\Roaming\Python\Python313\site-packages\gymnasium\core.py", line 327, in step
+    return self.env.step(action)
+           ~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\Aarif\AppData\Roaming\Python\Python313\site-packages\gymnasium\wrappers\common.py", line 285, in step
+    return self.env.step(action)
+           ~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\Aarif\AppData\Roaming\Python\Python313\site-packages\highway_env\envs\common\abstract.py", line 240, in step
+    self._simulate(action)
+    ~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\Aarif\AppData\Roaming\Python\Python313\site-packages\highway_env\envs\common\abstract.py", line 280, in _simulate
+    self._automatic_rendering()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Aarif\AppData\Roaming\Python\Python313\site-packages\highway_env\envs\common\abstract.py", line 341, in _automatic_rendering
+    self.render()
+    ~~~~~~~~~~~^^
+  File "C:\Users\Aarif\AppData\Roaming\Python\Python313\site-packages\highway_env\envs\common\abstract.py", line 308, in render
+    image = self.viewer.get_image()
+            ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get_image'
+C:\Users\Aarif\AppData\Roaming\Python\Python313\site-packages\gymnasium\wrappers\rendering.py:434: UserWarning: [33mWARN: Unable to save last video! Did you call close()?[0m
+  logger.warn("Unable to save last video! Did you call close()?")

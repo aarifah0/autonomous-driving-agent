@@ -107,28 +107,30 @@ def make_stage_video(stage_name, model_path, config_path, output_dir, episodes):
 
 def make_labeled_clip(clip, label):
     try:
-        label_text = TextClip(label, fontsize=30, color="white", bg_color="black", size=(clip.w, 50), method="label")
+        label_text = TextClip(label, fontsize=30, color="white", bg_color="black", size=(clip.w, 50))
         label_text = label_text.set_duration(clip.duration).set_fps(clip.fps)
         return CompositeVideoClip([clip, label_text.set_position(("center", "top"))])
     except Exception:
         return clip
 
 
-def build_evolution_video(stage_paths, output_path):
+def build_evolution_video(stage_paths, labels, output_path):
     stage_clips = []
-    for path in stage_paths:
+    for path, label in zip(stage_paths, labels):
         clip = VideoFileClip(str(path))
-        labeled = make_labeled_clip(clip, Path(path).stem.replace("_", " ").title())
+        labeled = make_labeled_clip(clip, label)
         stage_clips.append(labeled)
 
     min_duration = min(clip.duration for clip in stage_clips)
+    # Trim all stage clips to the same duration using `subclip`
     stage_clips = [clip.subclipped(0, min_duration) for clip in stage_clips]
 
     min_height = min(clip.h for clip in stage_clips)
-    stage_clips = [clip.resize(height=min_height) for clip in stage_clips]
+    stage_clips = [clip.resized(height=min_height) for clip in stage_clips]
 
     combined = clips_array([stage_clips])
-    combined.write_videofile(str(output_path), fps=24, codec="libx264", audio=False)
+    # Preserve original FPS to avoid speed distortion
+    combined.write_videofile(str(output_path), fps=stage_clips[0].fps, codec="libx264", audio=False)
     combined.close()
     for clip in stage_clips:
         clip.close()
@@ -147,7 +149,8 @@ def main():
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    config = load_config(config_path)
+    with open(config_path, "r") as f:
+        config = yaml.safe_load(f)
     total_timesteps = int(config.get("training", {}).get("total_timesteps", 500000))
 
     stage_models = find_stage_models(checkpoint_dir)
@@ -166,13 +169,23 @@ def main():
         raise FileNotFoundError("No fully trained model available.")
 
     stage_video_paths = []
+    stage_video_labels = []
     for stage_name, model_path in stages:
         stage_video = make_stage_video(stage_name, model_path, config_path, output_dir, args.episodes)
         stage_video_paths.append(stage_video)
+        
+        # Create simple label for this stage
+        if stage_name == "untrained":
+            label = "Untrained"
+        elif stage_name == "half_trained":
+            label = "Half Trained"
+        else:
+            label = "Trained"
+        stage_video_labels.append(label)
 
     evolution_path = output_dir / "evolution.mp4"
     print(f"Building side-by-side evolution video at {evolution_path}")
-    build_evolution_video(stage_video_paths, evolution_path)
+    build_evolution_video(stage_video_paths, stage_video_labels, evolution_path)
     print("Done. Evolution video saved to:", evolution_path)
 
 

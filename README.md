@@ -10,12 +10,7 @@
 
 ### Evolution video
 
-[![Evolution comparison](videos/eval/evolution.gif)](videos/eval/evolution.mp4)
-
-A GIF preview is shown above for inline rendering on GitHub. Click the image to watch or download the full MP4:
-
-- `videos/eval/evolution.mp4`
-
+![Untrained|100k steps|Fully trained @300k steps](assets/demo.gif)
 
 
 
@@ -25,15 +20,20 @@ A GIF preview is shown above for inline rendering on GitHub. Click the image to 
 
 The custom reward function is defined as:
 
-\[
-R_t = w_{speed} \, r_{speed} + w_{collision} \, r_{collision} + w_{lane} \, r_{lane}
-\]
-
-Where:
-
-- \(r_{speed} = \text{clip}\left(\frac{v - v_{min}}{v_{max} - v_{min}},\,0,\,1\right)\)
-- \(r_{collision} = \begin{cases} -1, & \text{if crash occurs} \\ +1, & \text{if no crash occurs} \end{cases}\)
-- \(r_{lane} = 1 - \left(\frac{d}{w / 2}\right)^2\)
+$$
+\begin{aligned}
+R_t &= w_{\text{speed}} \, r_{\text{speed}} + w_{\text{collision}} \, r_{\text{collision}} + w_{\text{lane}} \, r_{\text{lane}} \\
+\\
+r_{\text{speed}} &= \text{clip}\left(\frac{v - v_{\text{min}}}{v_{\text{max}} - v_{\text{min}}},\,0,\,1\right) \\
+\\
+r_{\text{collision}} &= \begin{cases} 
+-1, & \text{if crash occurs} \\ 
++1, & \text{if no crash occurs} 
+\end{cases} \\
+\\
+r_{\text{lane}} &= 1 - \left(\frac{d}{w / 2}\right)^2
+\end{aligned}
+$$
 
 With configuration weights in `config.yaml`:
 
