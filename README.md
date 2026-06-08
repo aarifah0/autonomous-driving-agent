@@ -170,11 +170,11 @@ Five discrete actions:
 
 ### 3.1 Reward Graph
 
-![Reward Graph](logs/training_reward.png)
+![Reward Graph](assets/training_reward.png)
 
 Figure 2: Reward Graph 
 
-![Episode Length](logs/training_length.png)
+![Episode Length](assets/training_length.png)
 
 Figure 3: Episode Length
 
